@@ -1,0 +1,35 @@
+﻿@using MvcPlayground.Models.Framework
+@model Layout
+
+<div id="header">
+    @{
+        foreach (var container in Model["header"].Containers)
+        {
+            Html.RenderPartial(container.Instance.Module.Control, container.RetrieveModel());
+        }
+    }
+</div>
+
+<div id="main">
+    @{
+        foreach(var container in Model["main"].Containers)
+        {
+            try
+            {
+                Html.RenderPartial(container.Instance.Module.Control, container.RetrieveModel());
+            }
+            catch
+            {
+            }
+        }
+    }
+</div>
+
+<div id="footer">
+    @{
+        foreach (var container in Model["footer"].Containers)
+        {
+            Html.RenderPartial(container.Instance.Module.Control, container.RetrieveModel());
+        }
+    }
+</div>
