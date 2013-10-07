@@ -9,13 +9,22 @@ namespace MvcPlayground.Models.Framework
     {
         public int ModuleId { get; set; }
         public string Name { get; set; }
-        public string File { get; set; }
+        public string ControlFile { get; set; }
+        public string ErrorFile { get; set; }
 
-        public string Control
+        public string ControlPath
         {
             get
             {
-                return string.Format("~/Modules/{0}/{1}", Name, File ?? "Index.cshtml");
+                return string.Format("~/Modules/{0}/{1}", Name, ControlFile ?? "Index.cshtml");
+            }
+        }
+
+        public string ErrorControlPath
+        {
+            get
+            {
+                return string.Format("~/Modules/{0}/{1}", Name, ErrorFile ?? "Error.cshtml");
             }
         }
     }

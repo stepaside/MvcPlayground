@@ -1,35 +1,13 @@
-﻿@using MvcPlayground.Models.Framework
-@model Layout
+﻿@inherits MvcPlayground.Views.CitkaViewPage
 
 <div id="header">
-    @{
-        foreach (var container in Model["header"].Containers)
-        {
-            Html.RenderPartial(container.Instance.Module.Control, container.RetrieveModel());
-        }
-    }
+    @RenderZone("header")
 </div>
 
 <div id="main">
-    @{
-        foreach(var container in Model["main"].Containers)
-        {
-            try
-            {
-                Html.RenderPartial(container.Instance.Module.Control, container.RetrieveModel());
-            }
-            catch
-            {
-            }
-        }
-    }
+    @RenderZone("main")
 </div>
 
 <div id="footer">
-    @{
-        foreach (var container in Model["footer"].Containers)
-        {
-            Html.RenderPartial(container.Instance.Module.Control, container.RetrieveModel());
-        }
-    }
+    @RenderZone("footer")
 </div>
