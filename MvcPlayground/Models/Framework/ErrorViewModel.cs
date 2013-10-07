@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MvcPlayground.Models.Framework
 {
-    public class ErrorModelView
+    public class ErrorViewModel
     {
         public object Model { get; set; }
         public Exception Exception { get; set; }

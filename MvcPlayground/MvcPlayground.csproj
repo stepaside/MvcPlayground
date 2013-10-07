@@ -153,7 +153,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Framework\Application.cs" />
-    <Compile Include="Models\Framework\ErrorModelView.cs" />
+    <Compile Include="Models\Framework\ErrorViewModel.cs" />
     <Compile Include="Models\Framework\Layout.cs" />
     <Compile Include="Models\Framework\Module.cs" />
     <Compile Include="Models\Framework\ModuleContainer.cs" />

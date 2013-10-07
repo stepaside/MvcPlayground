@@ -29,7 +29,7 @@ namespace MvcPlayground.Views
                         {
                             if (File.Exists(this.NormalizePath(container.Instance.Module.ErrorControlPath)))
                             {
-                                writer.Write(Html.Partial(container.Instance.Module.ErrorControlPath, new ErrorModelView { Exception = ex, Model = container.RetrieveModel() }).ToHtmlString());
+                                writer.Write(Html.Partial(container.Instance.Module.ErrorControlPath, new ErrorViewModel { Exception = ex, Model = container.RetrieveModel() }).ToHtmlString());
                             }
                         }
                     }
