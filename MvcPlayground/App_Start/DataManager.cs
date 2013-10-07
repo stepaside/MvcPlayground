@@ -33,7 +33,7 @@ namespace MvcPlayground
                 new Page { PageId = 1 , ApplicationId = 1, Name = "home", LayoutId = 10 },
                 new Page { PageId = 2 , ApplicationId = 1, Name = "product", LayoutId = 10 },
                 new Page { PageId = 3 , ApplicationId = 1, Name = "supplier", LayoutId = 10 },
-                new Page { PageId = 4 , ApplicationId = 1, Name = "product/search", LayoutId = 10 },
+                new Page { PageId = 4 , ApplicationId = 1, Name = "productSearch", LayoutId = 10 },
             };
             return app;
         }

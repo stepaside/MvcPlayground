@@ -38,7 +38,7 @@ namespace MvcPlayground.Controllers
             requestContext.RouteData.Values.TryGetValue("action", out action);
             if (action != null && action != CitkaControllerFactory.DefaultAction)
             {
-                pageName += "/" + action;
+                pageName += action;
             }
 
             var app = appCode != null ? DataManager.GetApplication(Convert.ToString(appCode), Convert.ToString(appVersion)) : DataManager.GetApplication(requestContext.HttpContext.Request.Url.Host);
