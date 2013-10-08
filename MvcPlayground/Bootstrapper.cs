@@ -1,7 +1,7 @@
-using System.Web.Mvc;
 using Microsoft.Practices.Unity;
-using Unity.Mvc4;
 using MvcPlayground.Controllers;
+using System.Web.Mvc;
+using Unity.Mvc4;
 
 namespace MvcPlayground
 {
@@ -32,6 +32,7 @@ namespace MvcPlayground
     public static void RegisterTypes(IUnityContainer container)
     {
         container.RegisterType<IControllerFactory, CitkaControllerFactory>(new TransientLifetimeManager());
+        container.RegisterType<IActionInvoker, CitkaDynamicActionInvoker>("CitkaDynamicActionInvoker", new TransientLifetimeManager());
     }
   }
 }

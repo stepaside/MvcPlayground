@@ -1,4 +1,5 @@
-﻿using MvcPlayground.Controllers;
+﻿using Microsoft.Practices.Unity;
+using MvcPlayground.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,11 @@ namespace MvcPlayground
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        public static IUnityContainer Container { get; set; }
+
         protected void Application_Start()
         {
-            Bootstrapper.Initialize();
+            Container = Bootstrapper.Initialize();
 
             AreaRegistration.RegisterAllAreas();
 

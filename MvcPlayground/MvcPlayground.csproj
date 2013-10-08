@@ -146,8 +146,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controllers\CitkaDynamicActionDescriptor.cs" />
+    <Compile Include="Controllers\CitkaDynamicActionInvoker.cs" />
     <Compile Include="Controllers\CitkaController.cs" />
     <Compile Include="Controllers\CitkaControllerFactory.cs" />
+    <Compile Include="Controllers\CitkaDynamicParameterDescriptor.cs" />
     <Compile Include="Controllers\Product\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

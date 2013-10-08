@@ -37,7 +37,7 @@ namespace MvcPlayground.Controllers
                 return base.View();
             }
         }
-
+        
         public void SetupModuleModel<T>(string name, T model)
         {
             if (Page != null)

@@ -1,4 +1,5 @@
-﻿using MvcPlayground;
+﻿using Microsoft.Practices.Unity;
+using MvcPlayground;
 using MvcPlayground.Models.Framework;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Unity.Mvc4;
 
 namespace MvcPlayground.Controllers
 {
@@ -25,6 +27,11 @@ namespace MvcPlayground.Controllers
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
             var controller = base.GetControllerInstance(requestContext, controllerType) as CitkaController;
+            var actionInvoker = MvcApplication.Container.Resolve<IActionInvoker>("CitkaDynamicActionInvoker");
+            if (actionInvoker != null)
+            {
+                controller.ActionInvoker = actionInvoker;
+            }
 
             object appCode;
             requestContext.RouteData.Values.TryGetValue("application", out appCode);
@@ -36,7 +43,7 @@ namespace MvcPlayground.Controllers
             
             object action;
             requestContext.RouteData.Values.TryGetValue("action", out action);
-            if (action != null && action != CitkaControllerFactory.DefaultAction)
+            if (action != null && action is string && (string)action != CitkaControllerFactory.DefaultAction)
             {
                 pageName += action;
             }
