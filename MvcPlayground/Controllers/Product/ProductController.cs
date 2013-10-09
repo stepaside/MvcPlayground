@@ -12,15 +12,17 @@ namespace MvcPlayground.Controllers.Product
         public ViewResult Index(int id)
         {
             var model = DataManager.GetProduct(id);
-            SetupModuleModel("ProductDetail", model);
-            SetupModuleModel("ProductOfTheDay", model);
-            return View();
+            SetupModuleModel("ProductDetail", new { Product = model });
+            SetupModuleModel("ProductOfTheDay", new { Product = model });
+            return CitkaView();
         }
 
         [ActionName("search")]
         public ViewResult Search(string query)
         {
-            return View();
+            var products = Enumerable.Range(1, 10).Select(i => DataManager.GetProduct(i));
+            SetupModuleModel("ProductSearch", products);
+            return CitkaView();
         }
     }
 }

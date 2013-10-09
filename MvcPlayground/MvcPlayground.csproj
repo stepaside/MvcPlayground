@@ -156,7 +156,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Framework\Application.cs" />
-    <Compile Include="Models\Framework\ErrorViewModel.cs" />
     <Compile Include="Models\Framework\Layout.cs" />
     <Compile Include="Models\Framework\Module.cs" />
     <Compile Include="Models\Framework\ModuleContainer.cs" />
@@ -233,10 +232,10 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Modules\Footer\Index.cshtml" />
-    <Content Include="Modules\Header\Index.cshtml" />
-    <Content Include="Modules\ProductDetail\Index.cshtml" />
-    <Content Include="Modules\ProductOfTheDay\Index.cshtml" />
+    <Content Include="Views\Footer\Index.cshtml" />
+    <Content Include="Views\Header\Index.cshtml" />
+    <Content Include="Views\ProductDetail\Index.cshtml" />
+    <Content Include="Views\ProductOfTheDay\Index.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -272,10 +271,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Modules\EventViewer\" />
-    <Folder Include="Modules\ProductSearch\" />
-    <Folder Include="Modules\SupplierDetail\" />
-    <Folder Include="Modules\TopSellers\" />
+    <Folder Include="Views\EventViewer\" />
+    <Folder Include="Views\ProductSearch\" />
+    <Folder Include="Views\SupplierDetail\" />
+    <Folder Include="Views\TopSellers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

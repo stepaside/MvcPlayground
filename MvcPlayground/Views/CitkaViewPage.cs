@@ -1,5 +1,8 @@
-﻿using MvcPlayground.Models.Framework;
+﻿using MvcPlayground.Controllers;
+using MvcPlayground.Models;
+using MvcPlayground.Models.Framework;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +15,10 @@ namespace MvcPlayground.Views
 {
     public abstract class CitkaViewPage : WebViewPage<Layout>
     {
+        private IControllerFactory _factory = ControllerBuilder.Current.GetControllerFactory();
+
+        private static ConcurrentDictionary<string, bool> _controllers = new ConcurrentDictionary<string, bool>();
+
         public HelperResult RenderZone(string name)
         {
             Action<TextWriter> action = writer =>
@@ -23,13 +30,33 @@ namespace MvcPlayground.Views
                     {
                         try
                         {
-                            writer.Write(Html.Partial(container.Instance.Module.ControlPath, container.RetrieveModel()).ToHtmlString());
+                            var controllerExists = _controllers.GetOrAdd(container.Instance.Module.ControllerName, controllerName =>
+                            {
+                                IController controller = null;
+                                try
+                                {
+                                    controller = _factory.CreateController(this.Request.RequestContext, controllerName);
+                                }
+                                catch { }
+                                return controller != null && !(controller is CitkaController);
+                            });
+
+                            if (controllerExists)
+                            {
+                                var actionName = Path.GetFileNameWithoutExtension(container.Instance.Module.ControlFile) ?? CitkaControllerFactory.DefaultAction;
+                                writer.Write(Html.Action(actionName, container.Instance.Module.ControllerName));
+                            }
+                            else
+                            {
+                                writer.Write(Html.Partial(container.Instance.Module.ViewPath, (object)container.ViewModel).ToHtmlString());
+                            }
                         }
                         catch (Exception ex)
                         {
                             if (File.Exists(this.NormalizePath(container.Instance.Module.ErrorControlPath)))
                             {
-                                writer.Write(Html.Partial(container.Instance.Module.ErrorControlPath, new ErrorViewModel { Exception = ex, Model = container.RetrieveModel() }).ToHtmlString());
+                                container.ViewModel.Exception = ex;
+                                writer.Write(Html.Partial(container.Instance.Module.ErrorControlPath, (object)container.ViewModel).ToHtmlString());
                             }
                         }
                     }

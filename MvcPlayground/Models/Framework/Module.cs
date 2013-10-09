@@ -12,11 +12,19 @@ namespace MvcPlayground.Models.Framework
         public string ControlFile { get; set; }
         public string ErrorFile { get; set; }
 
-        public string ControlPath
+        public string ControllerName
         {
             get
             {
-                return string.Format("~/Modules/{0}/{1}", Name, ControlFile ?? "Index.cshtml");
+                return Name + "Controller";
+            }
+        }
+
+        public string ViewPath
+        {
+            get
+            {
+                return string.Format("~/Views/{0}/{1}", Name, ControlFile ?? "Index.cshtml");
             }
         }
 
@@ -24,7 +32,7 @@ namespace MvcPlayground.Models.Framework
         {
             get
             {
-                return string.Format("~/Modules/{0}/{1}", Name, ErrorFile ?? "Error.cshtml");
+                return string.Format("~/Views/{0}/{1}", Name, ErrorFile ?? "Error.cshtml");
             }
         }
     }

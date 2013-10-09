@@ -4,7 +4,7 @@
 @inherits System.Web.Mvc.WebViewPage
 
 @{
-    var product = (Product)Model;
+    var product = (Product)((dynamic)Model).Product;
 }
 
 <h1>This is a @product.ProductId</h1>

@@ -1,4 +1,5 @@
-﻿using MvcPlayground.Models.Framework;
+﻿using MvcPlayground.Models;
+using MvcPlayground.Models.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace MvcPlayground.Controllers
             }
         }
 
-        public new ViewResult View()
+        public ViewResult CitkaView()
         {
             if (Page.Layout != null)
             {
@@ -38,17 +39,22 @@ namespace MvcPlayground.Controllers
             }
         }
         
-        public void SetupModuleModel<T>(string name, T model)
+        public void SetupModuleModel(string name, object model)
         {
             if (Page != null)
             {
                 var container = Page.FindContainerByModuleName(name);
                 if (container != null)
                 {
-                    var containerWithModel = new ModuleContainer<T>(container) { Entity = model };
+                    var containerWithModel = new ModuleContainer(container, model);
                     Page.ReplaceContainer(containerWithModel);
                 }
             }
         }
+
+        //public virtual ActionResult Index()
+        //{
+        //    return new EmptyResult();
+        //}
     }
 }

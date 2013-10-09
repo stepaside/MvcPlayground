@@ -15,7 +15,7 @@ namespace MvcPlayground.Controllers
             var action = base.FindAction(controllerContext, controllerDescriptor, actionName);
             if (action == null)
             {
-                var citkaAction = MvcApplication.Container.Resolve<CitkaDynamicActionDescriptor>(actionName);
+                var citkaAction = Bootstrapper.ResolveCommonAction(actionName, MvcApplication.Container);
                 if (citkaAction != null)
                 {
                     citkaAction.SetActionName(actionName);

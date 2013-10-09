@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Web;
 
@@ -7,27 +8,41 @@ namespace MvcPlayground.Models.Framework
 {
     public class ModuleContainer
     {
-        public string ZoneName { get; set; }
-        public ModuleInstance Instance { get; set; }
-        public virtual object RetrieveModel()
+        public ModuleContainer()
         {
-            return Instance;
+            ViewModel = new ExpandoObject();
         }
-    }
 
-    public class ModuleContainer<T> : ModuleContainer
-    {
-        public ModuleContainer(ModuleContainer container)
+        public ModuleContainer(ModuleContainer container, object model)
         {
             Instance = container.Instance;
             ZoneName = container.ZoneName;
+
+            dynamic viewModel = new ExpandoObject();
+            var source = (ExpandoObject)container.ViewModel;
+    
+            foreach (var pair in (IDictionary<string, object>)source)
+            {
+                viewModel[pair.Key] = pair.Value;
+            }
+
+            if (model != null)
+            {
+                var viewModelAsMap = viewModel as IDictionary<string, object>;
+                foreach(var property in model.GetType().GetProperties())
+                {
+                    viewModelAsMap[property.Name] = property.GetValue(model);
+                }
+            }
+
+            viewModel.Instance = container.Instance;
+            
+            ViewModel = viewModel;
         }
 
-        public T Entity { get; set; }
-
-        public override object RetrieveModel()
-        {
-            return Entity;
-        }
+        public string ZoneName { get; set; }
+        public ModuleInstance Instance { get; set; }
+        
+        public dynamic ViewModel { get; private set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using MvcPlayground.Controllers;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,7 +18,7 @@ namespace MvcPlayground
     public class MvcApplication : System.Web.HttpApplication
     {
         public static IUnityContainer Container { get; set; }
-
+        
         protected void Application_Start()
         {
             Container = Bootstrapper.Initialize();
