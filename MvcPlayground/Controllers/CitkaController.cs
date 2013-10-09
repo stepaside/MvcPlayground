@@ -31,7 +31,14 @@ namespace MvcPlayground.Controllers
         {
             if (Page.Layout != null)
             {
-                return base.View(Page.Layout.Source, Page.Layout);
+                if (Page.Layout.Source != null)
+                {
+                    return base.View(Page.Layout.Source, Page.Layout);
+                }
+                else
+                {
+                    return base.View(Page.Layout);
+                }
             }
             else
             {
