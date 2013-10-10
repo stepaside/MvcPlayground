@@ -53,8 +53,7 @@ namespace MvcPlayground.Controllers
                 var container = Page.FindContainerByModuleName(name);
                 if (container != null)
                 {
-                    var containerWithModel = new ModuleContainer(container, model);
-                    Page.ReplaceContainer(containerWithModel);
+                    container.MergeModel(model);
                 }
             }
         }

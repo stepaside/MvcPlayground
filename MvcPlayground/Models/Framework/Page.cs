@@ -40,19 +40,5 @@ namespace MvcPlayground.Models.Framework
         {
             return Layout.Zones.SelectMany(z => z.Containers).FirstOrDefault(c => string.Equals(c.Instance.Module.Name, name, StringComparison.OrdinalIgnoreCase));
         }
-
-        public void ReplaceContainer(ModuleContainer container)
-        {
-            var zone = Layout[container.ZoneName];
-            if (zone != null)
-            {
-                var containers = (List<ModuleContainer>)zone.Containers;
-                var index = containers.FindIndex(c => c.Instance.Index == container.Instance.Index);
-                if (index > -1)
-                {
-                    containers[index] = container;
-                }
-            }
-        }
     }
 }

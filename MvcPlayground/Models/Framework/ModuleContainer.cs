@@ -11,21 +11,13 @@ namespace MvcPlayground.Models.Framework
         public ModuleContainer()
         {
             ViewModel = new ExpandoObject();
+            ViewModel.Instance = Instance;
         }
 
-        public ModuleContainer(ModuleContainer container, object model)
+        public void MergeModel(object model)
         {
-            Instance = container.Instance;
-            ZoneName = container.ZoneName;
-
-            dynamic viewModel = new ExpandoObject();
-            var source = (ExpandoObject)container.ViewModel;
+            var viewModel = (ExpandoObject)ViewModel;
     
-            foreach (var pair in (IDictionary<string, object>)source)
-            {
-                viewModel[pair.Key] = pair.Value;
-            }
-
             if (model != null)
             {
                 var viewModelAsMap = viewModel as IDictionary<string, object>;
@@ -34,10 +26,6 @@ namespace MvcPlayground.Models.Framework
                     viewModelAsMap[property.Name] = property.GetValue(model);
                 }
             }
-
-            viewModel.Instance = container.Instance;
-            
-            ViewModel = viewModel;
         }
 
         public string ZoneName { get; set; }
