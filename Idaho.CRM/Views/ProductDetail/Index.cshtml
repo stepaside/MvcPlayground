@@ -1,0 +1,10 @@
+﻿@using Idaho.CRM.Models.Framework
+@using Idaho.CRM.Models.Product
+
+@inherits System.Web.Mvc.WebViewPage
+
+@{
+    var product = (Product)((dynamic)Model).Product;
+}
+
+<h1>This is a @product.ProductId</h1>
