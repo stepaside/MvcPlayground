@@ -1,8 +1,10 @@
 ﻿@using MvcPlayground.Models.Product
-@inherits System.Web.Mvc.WebViewPage
+@using MvcPlayground.Models.Customer
+@inherits System.Web.Mvc.LocalizableWebViewPage
 
 @{
     var product = (Product)((dynamic)Model).Product;
+    var customer = (Customer)((dynamic)Model).Customer;
 }
 
-<h1>This is a product of the day (from @product.ProductId)</h1>
+<h1>This is a product of the day (from @product.ProductId) for @customer.Name</h1>

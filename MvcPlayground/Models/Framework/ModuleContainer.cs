@@ -8,10 +8,11 @@ namespace MvcPlayground.Models.Framework
 {
     public class ModuleContainer
     {
+        private ModuleInstance _instance;
+
         public ModuleContainer()
         {
             ViewModel = new ExpandoObject();
-            ViewModel.Instance = Instance;
         }
 
         public void MergeModel(object model)
@@ -29,7 +30,18 @@ namespace MvcPlayground.Models.Framework
         }
 
         public string ZoneName { get; set; }
-        public ModuleInstance Instance { get; set; }
+        public ModuleInstance Instance
+        {
+            get
+            {
+                return _instance;
+            }
+            set
+            {
+                _instance = value;
+                ViewModel.Instance = value;
+            }
+        }
         
         public dynamic ViewModel { get; private set; }
     }
