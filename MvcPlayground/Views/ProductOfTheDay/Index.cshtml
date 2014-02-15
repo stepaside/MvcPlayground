@@ -3,8 +3,8 @@
 @inherits System.Web.Mvc.LocalizableWebViewPage
 
 @{
-    var product = (Product)((dynamic)Model).Product;
-    var customer = (Customer)((dynamic)Model).Customer;
+    var product = (Product)Model;
+    //var customer = (Customer)((dynamic)Model).Customer;
 }
 
-<h1>This is a product of the day (from @product.ProductId) for @customer.Name</h1>
+<h1>This is a product of the day (from @product.Name)</h1>

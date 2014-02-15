@@ -19,7 +19,7 @@ namespace MvcPlayground.Controllers
 
         protected override Type GetControllerType(RequestContext requestContext, string controllerName)
         {
-            var controllerType = base.GetControllerType(requestContext, controllerName);
+            var controllerType = this.GetType().Assembly.DefinedTypes.FirstOrDefault(t => typeof(CitkaController).IsAssignableFrom(t) && t.Name == controllerName) ?? base.GetControllerType(requestContext, controllerName);
             // if a controller wasn't found with a matching name, return our dynamic controller
             return controllerType ?? typeof(CitkaController);
         }
@@ -27,38 +27,51 @@ namespace MvcPlayground.Controllers
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
             var controller = base.GetControllerInstance(requestContext, controllerType) as CitkaController;
+            controller.ControllerContext = new ControllerContext(requestContext, controller);
+
             var actionInvoker = MvcApplication.Container.Resolve<IActionInvoker>("CitkaDynamicActionInvoker");
             if (actionInvoker != null)
             {
                 controller.ActionInvoker = actionInvoker;
             }
 
-            object appCode;
-            requestContext.RouteData.Values.TryGetValue("application", out appCode);
-            
-            object appVersion;
-            requestContext.RouteData.Values.TryGetValue("version", out appVersion);
-
-            var pageName = Convert.ToString(requestContext.RouteData.Values["controller"]);
-            
-            object action;
-            requestContext.RouteData.Values.TryGetValue("action", out action);
-            if (action != null && action is string && (string)action != CitkaControllerFactory.DefaultAction)
+            if (controller.ControllerContext.ParentActionViewContext != null)
             {
-                pageName += action;
+                var parentController = (CitkaController)controller.ControllerContext.ParentActionViewContext.Controller;
+                var container = parentController.Page.FindContainerByModuleName(controllerType.Name.Replace("Controller", ""));
+                controller.ViewBag.Application = parentController.Application;
+                controller.ViewBag.Page = controller.Page;
+                controller.ViewBag.Instance = container.Instance;
             }
-
-            var app = appCode != null ? DataManager.GetApplication(Convert.ToString(appCode), Convert.ToString(appVersion)) : DataManager.GetApplication(requestContext.HttpContext.Request.Url.Host);
-
-            var page = app.SelectPageByName(pageName);
-
-            if (page != null)
+            else
             {
-                page.Instances = DataManager.LoadInstances(page.PageId);
-            }
+                object appCode;
+                requestContext.RouteData.Values.TryGetValue("application", out appCode);
 
-            controller.ViewBag.Application = app;
-            controller.ViewBag.Page = page;
+                object appVersion;
+                requestContext.RouteData.Values.TryGetValue("version", out appVersion);
+
+                var pageName = Convert.ToString(requestContext.RouteData.Values["controller"]);
+
+                object action;
+                requestContext.RouteData.Values.TryGetValue("action", out action);
+                if (action != null && action is string && (string)action != CitkaControllerFactory.DefaultAction)
+                {
+                    pageName += action;
+                }
+
+                var app = appCode != null ? DataManager.GetApplication(Convert.ToString(appCode), Convert.ToString(appVersion)) : DataManager.GetApplication(requestContext.HttpContext.Request.Url.Host);
+
+                var page = app.SelectPageByName(pageName);
+
+                if (page != null)
+                {
+                    page.Instances = DataManager.LoadInstances(page.PageId);
+                }
+
+                controller.ViewBag.Application = app;
+                controller.ViewBag.Page = page;
+            }
             
             return controller;
         }

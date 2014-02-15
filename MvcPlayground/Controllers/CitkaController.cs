@@ -26,8 +26,8 @@ namespace MvcPlayground.Controllers
                 return ViewBag.Page as Page;
             }
         }
-
-        public ViewResult CitkaView()
+        
+        protected ViewResult CitkaView()
         {
             if (Page.Layout != null)
             {
@@ -46,7 +46,7 @@ namespace MvcPlayground.Controllers
             }
         }
         
-        public void SetupModuleModel(string name, object model)
+        protected void SetupModuleModel(string name, object model)
         {
             if (Page != null)
             {
@@ -57,10 +57,5 @@ namespace MvcPlayground.Controllers
                 }
             }
         }
-
-        //public virtual ActionResult Index()
-        //{
-        //    return new EmptyResult();
-        //}
     }
 }

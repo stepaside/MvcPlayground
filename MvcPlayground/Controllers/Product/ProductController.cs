@@ -14,7 +14,7 @@ namespace MvcPlayground.Controllers.Product
         {
             var model = DataManager.GetProduct(id);
             SetupModuleModel("ProductDetail", new { Product = model });
-            SetupModuleModel("ProductOfTheDay", new { Product = model, Customer = new Customer { Name = "Customer 1" } });
+            //SetupModuleModel("ProductOfTheDay", new { Product = model, Customer = new Customer { Name = "Customer 1" } });
             return CitkaView();
         }
 

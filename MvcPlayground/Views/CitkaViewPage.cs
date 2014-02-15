@@ -38,13 +38,13 @@ namespace MvcPlayground.Views
                                     controller = _factory.CreateController(this.Request.RequestContext, controllerName);
                                 }
                                 catch { }
-                                return controller != null && !(controller is CitkaController);
+                                return controller != null && (!(controller is CitkaController) || controller.GetType() != typeof(CitkaController));
                             });
 
                             if (controllerExists)
                             {
                                 var actionName = Path.GetFileNameWithoutExtension(container.Instance.Module.ControlFile) ?? CitkaControllerFactory.DefaultAction;
-                                writer.Write(Html.Action(actionName, container.Instance.Module.ControllerName));
+                                writer.Write(Html.Action(actionName, container.Instance.Module.ControllerName).ToHtmlString());
                             }
                             else
                             {

@@ -161,6 +161,8 @@
     <Compile Include="Controllers\CitkaController.cs" />
     <Compile Include="Controllers\CitkaControllerFactory.cs" />
     <Compile Include="Controllers\CitkaDynamicParameterDescriptor.cs" />
+    <Compile Include="Controllers\CitkaModuleController.cs" />
+    <Compile Include="Controllers\ProductOfTheDay\ProductOfTheDayController.cs" />
     <Compile Include="Controllers\Product\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
